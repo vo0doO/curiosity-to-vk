@@ -1,0 +1,16 @@
+{
+  "users": {
+    "alovelace": {
+      "name": "Ada Lovelace",
+      "contacts": {
+        "ghopper": true
+      }
+    },
+    "ghopper": {
+      ...
+    },
+    "eclarke": {
+      ...
+    }
+  }
+}
