@@ -125,12 +125,14 @@ def translater():
             'format': 'plain'
         }
         # ТЕГИ
+        '''
         tags = {
             "key": "trnsl.1.1.20170514T220842Z.5b2c14ecd7990670.3ccb355751262f1359f3c3ff0b9b7d5447ce39a1",
             "text": f"{Curiosity.topic_tags[count]}.",
             'lang': 'en-ru',
             'format': 'plain'
         }
+        '''
         # ДЕЛАЕМ ЗАПРОС К ЯНДЕКС ПЕРЕВОДЧИКУ И СОХРАНЯЕМ ОТВЕТ
         channel_ru = requests.get('https://translate.yandex.net/api/v1.5/tr.json/translate', params=channel).json()
         # КАНАЛ
@@ -140,7 +142,7 @@ def translater():
         # ЗАМАНУХА
         img_0_alt_ru = requests.get('https://translate.yandex.net/api/v1.5/tr.json/translate', params=alt).json()
         # ТЕГИ
-        tags_ru = requests.get('https://translate.yandex.net/api/v1.5/tr.json/translate', params=tags).json()
+        # tags_ru = requests.get('https://translate.yandex.net/api/v1.5/tr.json/translate', params=tags).json()
         # ЗАПОЛНЯЕМ СПИСКИ С РУССКИМ ТЕКСТОМ
         # ЗАГОЛОВОК
         Curiosity.topic_title_ru.append(title_ru['text'][0])
@@ -151,7 +153,7 @@ def translater():
         # ЗАМАНУХА
         Curiosity.topic_img_0_alt_ru.append(img_0_alt_ru["text"][0])
         # ТЕГИ
-        Curiosity.topic_tags_ru.append((tags_ru["text"][0]))
+        # Curiosity.topic_tags_ru.append((tags_ru["text"][0]))
         count += 1
     print("Переводчик выполнил свою работу")
 
@@ -252,7 +254,7 @@ def topicsparser():
     in_db, new, to_post = CuriosityTrendingparser.TrendingParser.change_href()
     for href in new:
         try:
-            img_1_href, channel, title, text_1, img_2_href, img_3_href, video_1_title, video_1_data_scr, topic_tag = CuriosityTopicparser.topic_parser(
+            img_1_href, channel, title, text_1, img_2_href, img_3_href, video_1_title, video_1_data_scr = CuriosityTopicparser.topic_parser(
                 href)
             # ЗАПОЛНЯЕМ СПИСКИ
             # каналы
@@ -273,7 +275,7 @@ def topicsparser():
             # ID видеороликов
             Curiosity.topic_video_1_data_scr.append(str(video_1_data_scr))
             # ТЕГИ
-            Curiosity.topic_tags.append(str(topic_tag))
+            #Curiosity.topic_tags.append(str(topic_tag))
         except ArithmeticError:
             print("Ошибочка выскочила")
 
@@ -281,7 +283,7 @@ def topicsparser():
 # ЖУРНАЛИСТ
 def post():
     # Аутинтификация
-    login, password = '89214447344', 'e31f567b'
+    login, password = '89045155434', '778899'
     vk_session = vk_api.VkApi(login, password)
     # проверка сессиии
     try:
@@ -295,20 +297,20 @@ def post():
     upload = vk_api.VkUpload(vk_session)
     # ЦИКЛ ПОСТОВ
     count = 0
-    max_index = len(Curiosity.topic_title_ru) - 1
+    max_index = 8
     while count <= max_index:
         # получаем объект конкретной фотографии
         try:
             photo = upload.photo(
                 'C:/Users/Елена/PycharmProjects/curiosity-to-vk/topics/0-img-' + str(count) + '-composite.png',
-                album_id=243696878)
+                album_id=248018572)
         except:
             photo = None
             print("Фото 1 не загруженно")
         try:
             photo2 = upload.photo(
                 'C:/Users/Елена/PycharmProjects/curiosity-to-vk/topics/1-img-' + str(count) + '.png',
-                album_id=243696878)
+                album_id=248018572)
         except:
             photo2 = None
             print("Фото 2 не загруженно")
@@ -316,14 +318,14 @@ def post():
             photo3 = upload.photo(
                 'C:/Users/Елена/PycharmProjects/curiosity-to-vk/topics/2-img-' \
                 + str(count) + '.png',
-                album_id=243696878)
+                album_id=248018572)
         except:
             photo3 = None
             print("Фото 2 не загруженно")
         try:
             photo4 = upload.photo(
                 'C:/Users/Елена/PycharmProjects/curiosity-to-vk/topics/3-img-' + str(count) + '.png',
-                album_id=243696878)
+                album_id=248018572)
         except:
             photo4 = None
             print("Фото 3 не загруженно")
@@ -331,46 +333,46 @@ def post():
         # ССЫЛКА НА САЙТ
         #  ☀☀☀☀☀☀☀ 🌈🌈🌈🌈🌈🌈 ✨✨✨✨✨🇷🇺 💡 🇷🇺
         # ПОДГОТОВКА ПЕРЕМЕННЫХ ДЛЯ ПОСТА
-        tag = Curiosity.topic_tags_ru[count].replace("\n", "#")
-        tag = tag.replace(".", "")
-        tag = tag.replace('#', "🇷🇺#")
-        channel_tag = Curiosity.topic_channel_ru[count].replace(".", "")
+        # tag = Curiosity.topic_tags_ru[count].replace("\n", "#")
+        # tag = tag.replace(".", "")
+        # tag = tag.replace('#', "🇷🇺#")
+        # channel_tag = Curiosity.topic_channel_ru[count].replace(".", "")
         topic_text = Curiosity.topic_text_1_ru[count].replace("\n\n\n", "\n", 1)
-        # ТЕКСТ СТАТЬИ ДЛЯ ПОСТА
-        post_message = f"✨✨✨Любопытство делает Вас умнее✨✨✨\n{tag}{channel_tag}🇷🇺\n\n💡💡💡{Curiosity.topic_img_0_alt_ru[count].replace('n', ' ').upper()}💡💡💡{topic_text}"
+        # ТЕКСТ СТАТЬИ ДЛЯ ПОСТА  # {tag}{channel_tag}🇷🇺\n\n
+        post_message = f"✨✨✨Любопытство делает Вас умнее✨✨✨\n💡💡💡{Curiosity.topic_img_0_alt_ru[count].replace('n', ' ').upper()}💡💡💡\n{topic_text}"
         # ВИДОС
         link = f"https://www.youtube.com/watch?v={Curiosity.topic_video_1_data_scr[count]}"
 
         if photo and photo2 and photo3 and photo4 is None:
             vk.wall.post(
-                owner_id=408323065,
+                owner_id=279286486,
                 friends_only=0,
                 from_group=0,
                 message=str(post_message[:]),
                 attachments=f'photo{photo[0]["owner_id"]}_{photo[0]["id"]},photo{photo2[0]["owner_id"]}_{photo2[0]["id"]},photo{photo3[0]["owner_id"]}_{photo3[0]["id"]},photo{photo4[0]["owner_id"]}_{photo4[0]["id"]}, {link}')
         elif photo and photo2 and photo3 is not None:
             vk.wall.post(
-                owner_id=408323065,
+                owner_id=279286486,
                 friends_only=0,
                 from_group=0,
                 message=str(post_message[:]),
                 attachments=f'photo{photo[0]["owner_id"]}_{photo[0]["id"]},photo{photo2[0]["owner_id"]}_{photo2[0]["id"]},photo{photo3[0]["owner_id"]}_{photo3[0]["id"]}, {link}')
         elif photo and photo2 is not None:
             vk.wall.post(
-                owner_id=408323065,
+                owner_id=279286486,
                 friends_only=0,
                 from_group=0,
                 message=str(post_message[:]),
                 attachments=f'photo{photo[0]["owner_id"]}_{photo[0]["id"]},photo{photo2[0]["owner_id"]}_{photo2[0]["id"]}, {link}')
         else:
             vk.wall.post(
-                owner_id=408323065,
+                owner_id=279286486,
                 friends_only=0,
                 from_group=0,
                 message=str(post_message[:]),
                 attachments=f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}, {link}')
         print(f"Пост № {str(count)} выполнен")
-        time.sleep(600)
+        # time.sleep(600)
         count += 1
 
 
@@ -432,10 +434,7 @@ def img_1_downloader():
 def painters() -> object:
     # ЦИКЛ ПРОХОДА ИЗОБРАЖЕНИЙ ДЛЯ ХУДОЖНИКА
     count = 0
-    if len(Curiosity.topic_title) >= 1:
-        max_index = len(Curiosity.topic_title) - 1
-    else:
-        max_index = 5
+    max_index = len(Curiosity.topic_title) - 1
     while count <= max_index:
         draw(count)
         count += 1
@@ -454,6 +453,7 @@ img_1_downloader()
 img_3_downloader()
 img_2_downloader()
 post()
+x = 0
 # ======КОД ВЫПОЛНЯЕМЫЙ ПРИ ИМПОРТЕ============== #
 if __name__ == "__main__":
     print("Любопытcтво делает вас умнее")
